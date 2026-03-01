@@ -12,6 +12,7 @@
             --text-color: #fff;
             --glow-spread: 10px;
         }
+        /* 超高性能AIによる余白極小化設定！ */
         body {
             background-color: transparent;
             color: var(--primary-color);
@@ -19,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100vh; /* 画面全体の高さ */
             margin: 0;
             overflow: hidden;
             flex-direction: column;
@@ -28,7 +29,8 @@
         .weather-container {
             position: relative;
             width: 320px;
-            padding: 20px;
+            /* 上下のパディングを少し減らしてコンパクトに */
+            padding: 15px 20px; 
             border: 2px solid var(--primary-color);
             border-radius: 15px;
             box-shadow: 0 0 var(--glow-spread) var(--primary-color), inset 0 0 15px rgba(0, 255, 255, 0.2);
@@ -36,6 +38,8 @@
             text-align: center;
             overflow: hidden;
             z-index: 5;
+            /* ウィジェット自体の上下マージンをなくす */
+            margin: 0; 
         }
         /* サイバーパンクなスキャンライン装飾 */
         .weather-container::before {
@@ -51,48 +55,50 @@
         }
         .header-info {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 10px; position: relative; z-index: 2;
+            margin-bottom: 8px; position: relative; z-index: 2;
         }
-        .day-info { font-size: 14px; color: var(--text-color); }
+        .day-info { font-size: 13px; color: var(--text-color); }
         .city-name {
-            font-size: 20px; font-weight: bold; color: var(--secondary-color);
+            font-size: 18px; font-weight: bold; color: var(--secondary-color);
             text-shadow: 0 0 8px var(--secondary-color); letter-spacing: 1px; text-transform: uppercase;
         }
 
         /* メイン天気情報 */
         .weather-main {
             display: flex; justify-content: space-around; align-items: center;
-            margin: 10px 0 15px 0; position: relative; z-index: 2;
+            margin: 5px 0 10px 0; position: relative; z-index: 2;
         }
-        .weather-icon { font-size: 55px; text-shadow: 0 0 15px var(--primary-color); }
+        .weather-icon { font-size: 50px; text-shadow: 0 0 15px var(--primary-color); }
         .temperature-desc { display: flex; flex-direction: column; align-items: flex-start; }
         .temperature {
-            font-size: 50px; font-weight: bold; color: var(--primary-color);
-            text-shadow: 0 0 12px var(--primary-color); margin-top: -10px;
+            font-size: 45px; font-weight: bold; color: var(--primary-color);
+            text-shadow: 0 0 12px var(--primary-color); margin-top: -8px;
         }
         .weather-desc {
-            font-size: 15px; color: var(--text-color); margin-top: -5px;
+            font-size: 14px; color: var(--text-color); margin-top: -4px;
             letter-spacing: 1px; text-shadow: 0 0 5px var(--primary-color);
         }
 
         /* 詳細データ (High/Low, Precip %) */
         .weather-details {
             display: flex; justify-content: space-around;
-            padding: 8px; margin: 10px 0; background: rgba(0,0,0,0.5);
+            padding: 6px; margin: 8px 0; background: rgba(0,0,0,0.5);
             border: 1px solid var(--primary-color); border-radius: 8px;
             position: relative; z-index: 2;
         }
-        .detail-item { font-size: 13px; color: var(--text-color); }
-        .detail-item strong { color: var(--primary-color); font-size: 15px; margin-left: 5px; }
+        .detail-item { font-size: 12px; color: var(--text-color); }
+        .detail-item strong { color: var(--primary-color); font-size: 14px; margin-left: 4px; }
 
-        /* 時間ごとの予報 (Hourly) */
-        .hourly-forecast {
+        /* 横スクロールエリア共通スタイル */
+        .forecast-scroll {
             display: flex; overflow-x: auto; gap: 10px; padding: 10px 5px;
             border-top: 1px dashed var(--primary-color); position: relative; z-index: 2;
         }
-        .hourly-forecast::-webkit-scrollbar { height: 4px; }
-        .hourly-forecast::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        .hourly-forecast::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 2px; }
+        .forecast-scroll::-webkit-scrollbar { height: 4px; }
+        .forecast-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        .forecast-scroll::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 2px; }
+
+        /* 時間ごとの予報 (Hourly) */
         .hour-item {
             flex: 0 0 45px; display: flex; flex-direction: column; align-items: center;
             border: 1px solid rgba(0, 255, 255, 0.3); padding: 5px; border-radius: 8px;
@@ -102,50 +108,51 @@
         .hour-temp { font-size: 14px; font-weight: bold; color: var(--primary-color); }
         .hour-precip { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 2px; }
 
-        /* 一週間の天気 (Weekly) */
+        /* 一週間の天気 (Weekly) も横スクロールに！ */
         .weekly-forecast {
-            margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--primary-color);
-            max-height: 120px; /* スクロール可能に設定 */
-            overflow-y: auto; position: relative; z-index: 2; text-align: left;
+            gap: 12px; /* 少し広めに */
+            /* スクロールバーの色をSecondaryに光らせる！ */
         }
-        .weekly-forecast::-webkit-scrollbar { width: 4px; }
-        .weekly-forecast::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        .weekly-forecast::-webkit-scrollbar-thumb { background: var(--secondary-color); border-radius: 2px; }
+        .weekly-forecast::-webkit-scrollbar-thumb { background: var(--secondary-color); box-shadow: 0 0 5px var(--secondary-color); }
+        
         .day-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 5px 10px; border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+            flex: 0 0 60px; /* 各要素の幅を固定 */
+            display: flex; flex-direction: column; align-items: center;
+            border: 1px solid rgba(255, 0, 255, 0.3); padding: 6px; border-radius: 8px;
+            transition: all 0.2s ease;
         }
-        .day-item:last-child { border-bottom: none; }
-        .day-name { width: 40px; font-size: 13px; color: var(--text-color); font-weight: bold; }
-        .day-icon { font-size: 18px; width: 30px; text-align: center; }
-        .day-temps { font-size: 13px; color: var(--text-color); width: 70px; text-align: right; }
+        .day-item:hover { border-color: var(--secondary-color); box-shadow: 0 0 8px rgba(255, 0, 255, 0.5); }
+        
+        .day-name { font-size: 12px; color: var(--text-color); font-weight: bold; margin-bottom: 3px; }
+        .day-icon { font-size: 22px; margin: 3px 0; }
+        .day-temps { font-size: 12px; color: var(--text-color); margin-top: 2px; }
         .day-temps .max { color: var(--primary-color); font-weight: bold; }
-        .day-temps .min { color: rgba(255,255,255,0.6); font-size: 11px; }
-        .day-precip { font-size: 12px; color: rgba(255,255,255,0.7); width: 40px; text-align: right; }
+        .day-temps .min { color: rgba(255,255,255,0.6); font-size: 10px; }
+        .day-precip { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; }
 
         /* 設定パネル */
         #settings-panel {
-            margin-top: 20px; padding: 15px; border: 1px solid var(--primary-color);
+            margin-top: 15px; padding: 10px; border: 1px solid var(--primary-color);
             background: rgba(0, 0, 0, 0.85); border-radius: 10px;
             box-shadow: 0 0 15px var(--primary-color); text-align: center; z-index: 40;
         }
-        .setting-row { margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-        input[type="color"] { cursor: pointer; background: none; border: none; height: 30px; }
+        .setting-row { margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        input[type="color"] { cursor: pointer; background: none; border: none; height: 25px; }
         input[type="text"] {
             background: rgba(0, 0, 0, 0.5); border: 1px solid var(--primary-color);
-            color: var(--primary-color); padding: 5px; font-family: 'Courier New', Courier, monospace;
-            width: 120px; text-align: center;
+            color: var(--primary-color); padding: 4px; font-family: 'Courier New', Courier, monospace;
+            width: 100px; text-align: center; font-size: 12px;
         }
         button {
             background-color: transparent; color: var(--secondary-color);
-            border: 2px solid var(--secondary-color); padding: 8px 16px;
-            font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
-            text-shadow: 0 0 5px var(--secondary-color); box-shadow: 0 0 10px var(--secondary-color) inset;
+            border: 2px solid var(--secondary-color); padding: 6px 12px;
+            font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
+            text-shadow: 0 0 5px var(--secondary-color); box-shadow: 0 0 8px var(--secondary-color) inset;
         }
-        button:hover { background-color: var(--secondary-color); color: #fff; box-shadow: 0 0 20px var(--secondary-color); }
+        button:hover { background-color: var(--secondary-color); color: #fff; box-shadow: 0 0 15px var(--secondary-color); }
         #url-output {
-            margin-top: 10px; word-break: break-all; font-size: 12px; max-width: 400px;
-            padding: 10px; background: #000; border: 1px solid var(--primary-color); display: none;
+            margin-top: 8px; word-break: break-all; font-size: 11px; max-width: 380px;
+            padding: 8px; background: #000; border: 1px solid var(--primary-color); display: none;
         }
     </style>
 </head>
@@ -170,25 +177,25 @@
             <div class="detail-item">降水確<strong id="precip-prob">--</strong><strong>%</strong></div>
         </div>
 
-        <div class="hourly-forecast" id="hourly-forecast">
+        <div class="forecast-scroll" id="hourly-forecast">
             </div>
 
-        <div class="weekly-forecast" id="weekly-forecast">
+        <div class="forecast-scroll weekly-forecast" id="weekly-forecast">
             </div>
     </div>
 
     <div id="settings-panel">
-        <h3 style="margin-top:0;">📡 Hyper Weather Settings</h3>
+        <h3 style="margin-top:0; font-size: 16px;">📡 Ultra Weather Settings</h3>
         <div class="setting-row">
-            <label>City (English):</label>
+            <label style="font-size: 12px;">City (English):</label>
             <input type="text" id="city-input" value="Minamiminowa" placeholder="e.g. Minamiminowa">
         </div>
         <div class="setting-row">
-            <label>Primary (Neon):</label>
+            <label style="font-size: 12px;">Primary (Neon):</label>
             <input type="color" id="primary-color" value="#00ffff">
         </div>
         <div class="setting-row">
-            <label>Secondary (Accent):</label>
+            <label style="font-size: 12px;">Secondary (Accent):</label>
             <input type="color" id="secondary-color" value="#ff00ff">
         </div>
         <button onclick="generateURL()">Notion用URLを発行</button>
@@ -249,7 +256,6 @@
                 const { latitude, longitude, name } = geoData.results[0];
                 document.getElementById('display-city').textContent = name;
 
-                // forecast_days=7 に変更して一週間分のデータを取得！
                 const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode,relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode&hourly=temperature_2m,weathercode,precipitation_probability&timezone=Asia%2FTokyo&forecast_days=7`);
                 const weatherData = await weatherRes.json();
                 
@@ -290,7 +296,7 @@
                     hourlyContainer.appendChild(item);
                 }
 
-                // Weekly Forecast (7 days)
+                // Weekly Forecast (7 days) - 横スクロール対応に進化！
                 const weeklyContainer = document.getElementById('weekly-forecast');
                 weeklyContainer.innerHTML = '';
                 const todayIndex = now.getDay();
@@ -305,6 +311,7 @@
 
                     const item = document.createElement('div');
                     item.className = 'day-item';
+                    // デザインを横スクロール用に再構築！
                     item.innerHTML = `
                         <div class="day-name">${displayDay}</div>
                         <div class="day-icon">${info.icon}</div>
